@@ -27,8 +27,24 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
-  ],
+    {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/app/*`] }
+    },
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        credentials: {
+          apiKey: "AIzaSyB7Cg4iKEfrc6vZSwd-mxf0QqPr1tdUMrA",
+          authDomain: "world-works-dojo.firebaseapp.com",
+          databaseURL: "https://world-works-dojo.firebaseio.com",
+          projectId: "world-works-dojo",
+          storageBucket: "world-works-dojo.appspot.com",
+          messagingSenderId: "111406784612",
+          appId: "1:111406784612:web:18a4d88f3829c2d7f97f71",
+          measurementId: "G-ZKMQC8281Q"
+        }
+      }
+    }
+  ]
 }

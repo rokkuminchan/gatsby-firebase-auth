@@ -1,7 +1,6 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
+exports.onCreatePage = async ({ page, actions }) => {
+    const { createPage } = actions
 
-// You can delete this file if you're not using it
+    // Here you can create your static pages
+    // createPage();
+}

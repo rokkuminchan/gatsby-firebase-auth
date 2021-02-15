@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "world-works-dojo",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "app/**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

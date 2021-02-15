@@ -1,0 +1,16 @@
+[
+    {
+        "origin": [
+            "https://world-works-dojo.firebaseapp.com",
+            "http://localhost:3000",
+            "http://localhost:8000"
+        ],
+        "responseHeader": [
+            "*"
+        ],
+        "method": [
+            "GET"
+        ],
+        "maxAgeSeconds": 86400
+    }
+]

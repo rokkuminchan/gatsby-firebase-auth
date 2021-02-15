@@ -1,9 +1,17 @@
 import { Link } from "gatsby"
+import { navigate } from "gatsby";
 import PropTypes from "prop-types"
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { getUser, isLoggedIn, logout } from "../utils/auth"
+import firebase from "gatsby-plugin-firebase"
 
-const Header = ({ siteTitle }) => (
-  <header
+
+const Header = ({ siteTitle }) => {
+  function onLogOut() {
+    logout(firebase).then(() => navigate(`/app/login`));
+  }
+
+  return <header
     style={{
       background: `rebeccapurple`,
       marginBottom: `1.45rem`,
@@ -16,7 +24,7 @@ const Header = ({ siteTitle }) => (
         padding: `1.45rem 1.0875rem`,
       }}
     >
-      <h1 style={{ margin: 0 }}>
+      <span style={{ margin: 0 }}>
         <Link
           to="/"
           style={{
@@ -26,10 +34,16 @@ const Header = ({ siteTitle }) => (
         >
           {siteTitle}
         </Link>
-      </h1>
+      </span>
+      <span>-----------------------------</span>
+      <span style={{ margin: 0 }}>
+        <button onClick={onLogOut}>
+          {isLoggedIn() ? "Log out" : "Log in"}
+        </button>
+      </span>
     </div>
   </header>
-)
+}
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
