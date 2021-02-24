@@ -32,15 +32,10 @@ const Header = ({ siteTitle }) => {
             textDecoration: `none`,
           }}
         >
-          {siteTitle}
+          {isLoggedIn() ? "Hello " + getUser().displayName : ""}
         </Link>
       </span>
-      <span>-----------------------------</span>
-      <span style={{ margin: 0 }}>
-        <button onClick={onLogOut}>
-          {isLoggedIn() ? "Log out" : "Log in"}
-        </button>
-      </span>
+      {isLoggedIn() && <button onClick={onLogOut}>"Log out"</button>}
     </div>
   </header>
 }
