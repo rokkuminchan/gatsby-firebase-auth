@@ -35,7 +35,7 @@
   "license": "0BSD",
   "scripts": {
     "build": "gatsby build",
-    "emulators": "firebase emulators:start --only firestore",
+    "emulators": "firebase emulators:start --only firestore --import=./firestore-emu --export-on-exit",
     "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",

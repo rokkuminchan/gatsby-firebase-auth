@@ -40,6 +40,10 @@ const Profile = () => {
     }
 
     function onSave() {
+        if (!currentHistory.name || currentHistory.name.trim().length === 0) {
+            return alert("Name is required!");
+        }
+
         addOrUpdateHistoryItem(currentHistory)
             .then(() => {
                 onReset();
