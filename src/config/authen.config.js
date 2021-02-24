@@ -9,7 +9,6 @@ export function getAuthenUiConfig(firebaseInstance) {
         callbacks: {
             // Avoid redirects after sign-in.
             signInSuccessWithAuthResult: authResult => {
-
             }
         }
     };

@@ -1,41 +1,76 @@
 import React, { useEffect, useState } from "react"
-import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
+import { addOrUpdateHistoryItem, loadTestingData } from "../api/testingHistory";
 
-import { getUserInfo, saveUserInfo } from "../api/userInfo";
-import { getUser } from "../utils/auth"
 
+const Input = styled.input.attrs({ type: 'text' })`
+    cursor: pointer;
+    margin-bottom: 0;
+    width: 100px;
+    border-radius: 5px;
+    height: 35px;
+    -webkit-transition: 0.15s;
+    transition: 0.15s;
+    text-align: center;
+    display: inline-block;
+    margin: 5px;
+`
 
 const Profile = () => {
-    const [userInfo, setUserInfo] = useState();
-    const user = getUser();
-    const { displayName, email, emailVerified } = user;
-    const accessToken = user.stsTokenManager.accessToken;
+    const [needsReloading, setNeedsReloading] = useState(true);
+    const [testingHistoryData, setTestingHistoryData] = useState([]);
+    const [currentHistory, setCurrentHistory] = useState();
 
     useEffect(() => {
-        const history = {
-            uid: uuidv4()
-        };
+        loadTestingData().then(data => {
+            setTestingHistoryData([]);
+            setNeedsReloading(false);
+            setTestingHistoryData(data);
+        })
+    }, [needsReloading]);
 
-        async function fetchMyAPI() {
-            var result = await getUserInfo();
+    function onSelected(item) {
+        item = item || { name: "", executedDate: new Date() };
 
-            if (!result) {
-                result = history;
+        setCurrentHistory(item);
+    }
 
-                saveUserInfo(history);
-            }
+    function onNameChange(e) {
+        setCurrentHistory({ ...currentHistory, name: e.target.value });
+    }
 
-            setUserInfo(JSON.stringify(result));
-        }
+    function onSave() {
+        addOrUpdateHistoryItem(currentHistory)
+            .then(() => {
+                onReset();
+                setNeedsReloading(true);
+            });
+    }
 
-        fetchMyAPI();
-    }, []);
+    function onReset() {
+        setCurrentHistory(null);
+    }
 
     return <main>
-        <h3>Learning progress</h3>
-        <input type="button" value="Progress" />
+        <ul>
+            {
+                testingHistoryData.map((item) => {
+                    return <li key={item.id} onClick={() => onSelected(item)}>{item.name}</li>
+                })
+            }
+        </ul>
         <br />
-        {userInfo}
+        {currentHistory ? null : <Input value="Add new item" onClick={() => onSelected(null)} />}
+        {
+            currentHistory && <section>
+                <input type="text" placeholder="Enter name..." value={currentHistory.name} onChange={onNameChange} />
+
+                <div>
+                    <Input value="Cancel" onClick={onReset} />
+                    <Input value="Save" onClick={onSave} />
+                </div>
+            </section>
+        }
     </main>
 }
 
